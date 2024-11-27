@@ -1,0 +1,25 @@
+name: Create Logs on Push
+
+on:
+  push:
+    branches:
+      - '**' # すべてのブランチでトリガー
+
+jobs:
+  create-log:
+    runs-on: ubuntu-latest
+
+    steps:
+      # リポジトリをチェックアウト
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # logsディレクトリを作成し、日付付きのログファイルを生成
+      - name: Create logs directory and log file
+        run: |
+          # logsディレクトリが存在しない場合は作成
+          mkdir -p logs
+          # 現在の日付を取得してログファイル名を作成
+          date=$(date '+%Y-%m-%d')
+          echo "Log created on $date" > logs/$date.log
+          echo "Log file logs/$date.log has been created."
